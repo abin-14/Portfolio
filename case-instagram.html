@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Reducing Friction between Instagram and its Users – Abinfolio</title>
+  <meta name="description" content="An analysis of the friction around Instagram’s floating likes, using both qualitative and quantitative data, with suggestions to reduce it.">
+
+  <!-- Fonts: Press Start 2P + Exo 2 (logo), Instrument Sans (interface), Italiana (titles), Source Serif 4 (reading text, close to the serif Medium uses) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Exo+2:wght@400;500;700&family=Italiana&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="Assets/css/style.css">
+</head>
+<body class="sub" data-calm>
+
+  <!-- Star field (drawn by Assets/js/main.js) -->
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <header>
+    <a class="logo" href="index.html" aria-label="Abinfolio home"><span class="logo-a">Abin</span><span class="logo-f">folio</span></a>
+
+    <nav class="quick" aria-label="Quick links">
+      <!-- LinkedIn -->
+      <a class="icon-btn" href="https://in.linkedin.com/in/ux-abinsabu" target="_blank" rel="noopener" aria-label="Abin on LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="4.5"/>
+          <path d="M8 10.5v6M12 16.5v-6M12 13.2c0-1.7 1.1-2.8 2.5-2.8s2 1 2 2.6v3.5"/>
+          <circle cx="8" cy="7.7" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+
+      <!-- Gmail (opens a new message in Gmail) -->
+      <a class="icon-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=ux.abinsabu@gmail.com" target="_blank" rel="noopener" aria-label="Email Abin on Gmail" title="Gmail">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5.5" width="18" height="13" rx="3"/>
+          <path d="M3.8 7.6l8.2 6.2 8.2-6.2"/>
+        </svg>
+      </a>
+
+      <!-- Resume (rightmost) -->
+      <a class="chip" href="Assets/documents/resume.pdf" target="_blank" rel="noopener"><span class="lbl">View resume</span></a>
+    </nav>
+  </header>
+
+  <main class="sub-main case" data-mode="quick">
+    <div class="wrap">
+      <div class="page-bar">
+        <a class="chip" href="case-studies.html" aria-label="All case studies">&larr; <span class="lbl-long">All case studies</span><span class="lbl-short">Back</span></a>
+        <div class="seg" role="group" aria-label="Reading mode">
+          <button type="button" data-mode-btn="quick" aria-pressed="true">Quick read</button>
+          <button type="button" data-mode-btn="full" aria-pressed="false">Full case study</button>
+        </div>
+      </div>
+
+      <div class="case-head">
+        <p class="kicker">Case study 02 &middot; <time datetime="2025-02">Feb 2025</time></p>
+        <h1>Reducing Friction between Instagram and its Users</h1>
+        <p class="lede">An analysis of the friction around Instagram&rsquo;s floating likes, using both qualitative and quantitative data, with suggestions to reduce it.</p>
+      </div>
+
+      <!-- ===== QUICK READ ===== -->
+      <div class="quick-read">
+        <div class="stats">
+          <div class="stat"><b>5</b><span>user interviews</span></div>
+          <div class="stat"><b>21</b><span>survey responses</span></div>
+          <div class="stat"><b>4</b><span>suggestions</span></div>
+        </div>
+        <div class="facts">
+          <div class="fact"><h3>Context</h3><p>Instagram introduced floating likes about 5&ndash;8 months ago. They appear randomly alongside the older text-based &ldquo;liked by&rdquo; feature, which they did not replace.</p></div>
+          <div class="fact"><h3>My role</h3><p>As a UX designer would in the real world: balance business goals with the considerations and preferences of users, keeping my own views aside.</p></div>
+          <div class="fact"><h3>Interviews</h3><p>5 phone interviews (4 aged 18&ndash;24, 1 aged 25&ndash;34). Each participant first watched about 10 reels as they normally would.</p></div>
+          <div class="fact"><h3>Survey</h3><p>4 specific questions to 21 people, through Google Forms, to validate the interview data.</p></div>
+          <div class="fact span"><h3>Findings</h3><p>Most interviewees didn&rsquo;t really care about the feature, found it a visual hindrance, and preferred the text-based version, though they were fine with both appearing randomly. The survey leaned towards showing only the text-based one.</p></div>
+          <div class="fact"><h3>In between</h3><p>Instagram wrapped the reel description to a single line, so the floating like moved lower and the distraction reduced.</p></div>
+          <div class="fact"><h3>Takeaway</h3><p>A good feature, but not as useful as its predecessor. The best way forward is to make it subtle, in a way users like and accept.</p></div>
+          <div class="fact span"><h3>Suggestions</h3><ul class="sug">
+            <li>Show floating likes in 2 or 3 of 10 reels instead of 6 or 7.</li>
+            <li>Show the like of 1 person instead of 3, to reduce cognitive load and bring calmness.</li>
+            <li>If subtle is fine for Instagram, remove the initial haptics and the jump-in animation.</li>
+            <li>Remove all the unnecessary flows within and through the floating likes.</li>
+          </ul></div>
+        </div>
+        <p class="cta"><button class="btn primary btn-sm" type="button" data-mode-btn="full">Read the full case study &rarr;</button></p>
+      </div>
+
+      <!-- ===== FULL CASE STUDY ===== -->
+      <div class="full prose">
+
+        <p>This case study aims to analyse and reduce a potential friction between Instagram and its users on the lately introduced floating likes feature. This includes collecting data in both qualitative and quantitative ways to draw specific insights to analyse the situation, and also to suggest potential improvements to reduce the friction.</p>
+
+        <h2>What &amp; why</h2>
+        <p>Instagram had introduced the floating likes feature about 5&ndash;8 months ago to innovate the formerly text-based &ldquo;liked by&rdquo; feature that had existed for a long period of time. What was interesting was that the newly introduced feature did not replace the existing one. They were both shown at random throughout the reels.</p>
+        <p>This was actually done to prevent monotony and also not to replace a feature that had been on the platform from its existence.</p>
+        <p>Initially, I found it to be causing a bit of hindrance to the main flow of watching reels, and also felt that the earlier one was much more useful in comparison. This led me to analyse more about this in detail.</p>
+
+        <h2>What was my role?</h2>
+        <p>Keeping away my own views, let&rsquo;s look at what the users have to say about this lately introduced feature, how they accepted and adapted to it, and also asking them about their views on displaying it at random. Well, I couldn&rsquo;t be on one side, right?</p>
+        <p>Yeah! In this I have to do what a UX designer has to do in a real-world situation, which is to balance the business goals with the considerations and preferences of its users. So this really is a bit challenging for me, and later you will find that it becomes even more difficult to solve due to various situations and related problems. So yeah, let&rsquo;s get going&hellip;</p>
+
+        <h2>Let&rsquo;s ask the users themselves, right?</h2>
+        <p>Yes, the first step is to talk to the users of Instagram themselves. Here I conducted user research in a non-conventional way, which was over a phone call. Instagram is used well across every human being, so I chose my own friends as the participants of this case study.</p>
+        <p>5 participants were taken in total, comprising &ldquo;4 from 18-24&rdquo; and &ldquo;1 from 25-34&rdquo; age groups, which almost resembles Instagram&rsquo;s user diversity.</p>
+
+        <h2>And how was the user research conducted?</h2>
+        <p>For each participant, I gave an initial task to watch about 10 reels as they would, normally.</p>
+        <p>This was followed up by an interactive session, where they were able to express their views on various questions, based on these topics:</p>
+        <ul>
+          <li>Observation &amp; perception that they have about a feature that shows your friends had liked this reel.</li>
+          <li>Influence to like a reel because of a feature that shows your friends had liked this reel.</li>
+          <li>How they see the floating likes feature when compared to its former one. Is it engaging and interactive?</li>
+          <li>Whether it boosts their engagement with the reels.</li>
+          <li>About getting the feeling of being connected to someone, as within a community.</li>
+          <li>Comparing the impression they had when the feature was introduced at first versus now.</li>
+          <li>User adaptation and preferences in the likes of the two features.</li>
+        </ul>
+
+        <h2>And, the users said that&hellip;</h2>
+        <p>Most of the users said that they &ldquo;don&rsquo;t care&rdquo; about the feature, and that it is kind of causing a visual hindrance or asking too much of attention. Even though they prefer the text-based liked-by feature, they like it to be displayed at random with both. Most of them said that they would like a reel seeing their friend liked the same.</p>
+
+        <h2>Validating the user research data</h2>
+        <p>To validate the data obtained from the user research, I conducted a survey comprising 4 specific questions to a larger group of 21 people. I ensured the authenticity of the data by briefing each of them in person about what the survey was about.</p>
+        <p>Figures 1, 2, 3 and 4 show the responses of the survey conducted through Google Forms.</p>
+        <div class="gallery g4">
+          <figure data-fig="Fig 1"><a href="https://raw.githubusercontent.com/abin-14/Framer/refs/heads/main/q1.png" data-lb data-caption="Fig 1: Current impression about the floating likes."><img src="https://raw.githubusercontent.com/abin-14/Framer/refs/heads/main/q1.png" alt="Current impression about the floating likes" loading="lazy" onerror="this.closest('figure').classList.add('missing')"></a><span class="fn">Fig 1</span></figure>
+          <figure data-fig="Fig 2"><a href="https://raw.githubusercontent.com/abin-14/Framer/refs/heads/main/q2.png" data-lb data-caption="Fig 2: About the visual hindrance."><img src="https://raw.githubusercontent.com/abin-14/Framer/refs/heads/main/q2.png" alt="About the visual hindrance" loading="lazy" onerror="this.closest('figure').classList.add('missing')"></a><span class="fn">Fig 2</span></figure>
+          <figure data-fig="Fig 3"><a href="https://raw.githubusercontent.com/abin-14/Framer/refs/heads/main/q3.png" data-lb data-caption="Fig 3: About its impact."><img src="https://raw.githubusercontent.com/abin-14/Framer/refs/heads/main/q3.png" alt="About its impact" loading="lazy" onerror="this.closest('figure').classList.add('missing')"></a><span class="fn">Fig 3</span></figure>
+          <figure data-fig="Fig 4"><a href="https://raw.githubusercontent.com/abin-14/Framer/refs/heads/main/q4.png" data-lb data-caption="Fig 4: About the feature&rsquo;s current implementation."><img src="https://raw.githubusercontent.com/abin-14/Framer/refs/heads/main/q4.png" alt="About the feature's current implementation" loading="lazy" onerror="this.closest('figure').classList.add('missing')"></a><span class="fn">Fig 4</span></figure>
+        </div>
+        <p class="gcap">Figs 1&ndash;4: Survey responses on the current impression, the visual hindrance, the impact, and the feature&rsquo;s current implementation.</p>
+
+
+        <h2>What can we infer from both of the data?</h2>
+        <p>We could clearly see a split preference between the users themselves. Most of the people say it is causing visual hindrance and didn&rsquo;t make the reels section better but worse, so most of them suggest that they don&rsquo;t seem to like it much. Although the display of both at random contradicts, in the quantitative data, what the qualitative data said, the majority suggest displaying only the text-based one.</p>
+
+        <h2>What happened in-between?</h2>
+        <p>Instagram wrapped the description of a reel, minimising it to a single line, so the floating like went a little below, outside of the eyesight, and I guess the distraction is well reduced now.</p>
+
+        <h2>What can we conclude?</h2>
+        <p>In my perspective the feature is actually a good feature, but not as useful as its predecessor. This could vary across people, and it really does, as it was with one of the participants in the research. For me, the position where the text-based liked-by was, was actually perfect. It was like &ldquo;Seek and find me&rdquo;, and it was also at the bottom of the screen. Now it is kind of pulling towards it a lot. But as one of my participants said, earlier most often she didn&rsquo;t observe the feature a lot and now it is much more visible to her. And when Instagram wrapped the text, the distraction seemed to be reduced very well too.</p>
+        <p>In summary, even though most people kind of dislike it, there are people who like it too, and considering the time period since its introduction, the best possible way is to make it subtle in a way users like and accept.</p>
+
+        <h2>Suggestions to reduce the friction</h2>
+        <ul>
+          <li>Reduce the count of floating likes in reels, suggesting a reduction from 6 or 7 in 10 reels to 2 or 3 in the same. Seeing it repeatedly might make the users bored, as it is more visible to the users than the previous one.</li>
+          <li>Display the like of 1 person rather than the usual 3 people. This might reduce cognitive load and bring a sense of calmness.</li>
+          <li>If keeping it subtle is okay with Instagram, they could remove the initial haptics and the jump-in animation.</li>
+          <li>Remove all the unnecessary flows within and through the floating likes.</li>
+        </ul>
+        <p class="next"><a href="case-chatgpt.html">&larr; Previous case study: A/B Testing on ChatGPT&rsquo;s Desktop App</a></p>
+        <p class="next"><a href="case-studies.html">&larr; All case studies</a></p>
+      </div>
+    </div>
+  </main>
+
+  <script src="Assets/js/main.js" defer></script>
+  <script src="Assets/js/projects.js" defer></script>
+</body>
+</html>

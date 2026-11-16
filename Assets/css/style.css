@@ -1,0 +1,869 @@
+/* ==========================================================
+   Abinfolio – main stylesheet  (space theme)
+   1. Theme   2. Base + star field   3. Buttons
+   4. Header (logo + quick links)   5. Hero (name)
+   6. Job title + the two home buttons   7. About me (stacked cards)
+   8. Case studies list + case study pages   9. Opening animation
+   ========================================================== */
+
+
+/* 1. THEME – change colors and fonts here ---------------- */
+:root {
+  color-scheme: dark;
+
+  --bg: #000000;           /* pitch black */
+  --text: #f2edff;
+  --muted: #b3a8d4;
+
+  /* nebula tones used inside the buttons and the "folio" text */
+  --violet: 120, 80, 240;
+  --rose: 225, 85, 155;
+  --blue: 55, 120, 235;
+
+  --pixel: "Press Start 2P", "Courier New", monospace;                 /* "Abin" */
+  --space: "Exo 2", "Instrument Sans", system-ui, sans-serif;  /* "folio" – swap the font here */
+  --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+
+/* 2. BASE + STAR FIELD ----------------------------------- */
+*, *::before, *::after { box-sizing: inherit; }
+
+html {
+  height: 100%;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+::selection { background: rgba(var(--violet), .45); color: #fff; }
+
+a:focus-visible {
+  outline: 2px solid #cdbbff;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+
+/* 3. BUTTONS – one shared look for the top bar and the home page */
+/* Outlined: LinkedIn, Gmail, View resume, Projects.  The filled "primary" button is in section 6. */
+.icon-btn,
+.chip,
+.btn:not(.primary) {
+  color: var(--text);
+  background: transparent;
+  border: 1px solid rgba(255, 241, 232, .45);
+  transition: background-color .25s, border-color .25s, color .25s, transform .25s;
+}
+
+.icon-btn:hover,
+.chip:hover,
+.btn:not(.primary):hover {
+  background: rgba(255, 241, 232, .08);
+  border-color: rgba(255, 241, 232, .85);
+  transform: translateY(-1px);
+}
+
+
+/* 4. HEADER (logo + quick links) ------------------------- */
+header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.4rem clamp(1.1rem, 5vw, 4rem);
+}
+
+/* Logo: "Abin" in a pixel/arcade font, "folio" in a space font */
+.logo {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .12em;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.logo-a {
+  font-family: var(--pixel);
+  font-size: 1.15rem;
+  letter-spacing: .02em;
+  color: #fff;
+  text-shadow: 2px 2px 0 rgba(var(--violet), .75);   /* retro game shadow */
+}
+
+.logo-f {
+  font-family: var(--space);
+  font-weight: 500;
+  font-size: 1.6rem;
+  letter-spacing: .03em;
+  color: #cbbdff;            /* soft starlight lavender */
+}
+
+/* Quick links: LinkedIn, Gmail, then View resume (rightmost) */
+.quick {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 50%;
+}
+
+.icon-btn svg { width: 1.3rem; height: 1.3rem; color: #fff1e8; }   /* one warm white, like the other buttons */
+
+.chip {
+  font: 500 .92rem var(--sans);
+  text-decoration: none;
+  color: var(--text);
+  padding: .65rem 1.25rem;
+  border-radius: 999px;
+}
+
+
+/* 5. HERO – name (Italiana + Carina nebula, calm drift) -- */
+/* The four colour clouds move on their own slow clocks, so the colours keep
+   mixing through the letters (no one colour sits in one place for long). */
+@property --x1 { syntax: "<percentage>"; inherits: false; initial-value: 15%; }
+@property --x2 { syntax: "<percentage>"; inherits: false; initial-value: 85%; }
+@property --x3 { syntax: "<percentage>"; inherits: false; initial-value: 30%; }
+@property --x4 { syntax: "<percentage>"; inherits: false; initial-value: 70%; }
+
+:root {
+  --display: "Italiana", Georgia, serif;
+
+  /* Carina nebula colours (r, g, b) – swap these to change the clouds */
+  --neb-base: #ffe6d8;
+  --neb-1: 255, 140, 70;    /* amber */
+  --neb-2: 235, 80, 130;    /* rose */
+  --neb-3: 80, 130, 255;    /* blue */
+  --neb-4: 150, 90, 255;    /* violet */
+
+  /* starting positions of the clouds (also the fallback if animation is off) */
+  --x1: 15%; --x2: 85%; --x3: 30%; --x4: 70%;
+
+  /* grey cloud texture, blended over the colours so the letters look like gas */
+  --gas: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='320'><filter id='g' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.006 .015' numOctaves='5' seed='9'/><feColorMatrix values='1.9 0 0 0 -.45  1.9 0 0 0 -.45  1.9 0 0 0 -.45  0 0 0 0 1'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+}
+
+body:not(.sub) main {
+  position: relative;
+  z-index: 1;
+  flex: 1;                              /* fills the space under the header */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 clamp(1.1rem, 5vw, 4rem) 10vh;   /* extra bottom padding lifts it slightly above true centre */
+}
+
+/* very faint dust haze behind the name */
+body:not(.sub) main::before {
+  content: "";
+  position: absolute;
+  width: min(92vw, 800px);
+  height: min(42vw, 320px);
+  background:
+    radial-gradient(50% 55% at 28% 50%, rgba(var(--neb-1), .13), transparent 70%),
+    radial-gradient(45% 50% at 74% 55%, rgba(var(--neb-4), .12), transparent 70%);
+  filter: blur(32px);
+  pointer-events: none;
+  transform: translateY(-4vh);
+}
+
+.hero { position: relative; }
+
+/* Name: clouds, gas and a few stars inside the letters */
+.name {
+  position: relative;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 11vw, 7.6rem);
+  letter-spacing: .07em;
+  line-height: 1.15;
+  color: #fff;                           /* fallback if gradient text is unsupported */
+  background:
+    radial-gradient(1.3px 1.3px at 9% 34%, #fff, transparent),                    /* stars */
+    radial-gradient(1px 1px at 22% 68%, rgba(255, 255, 255, .85), transparent),
+    radial-gradient(1.5px 1.5px at 38% 26%, #fff, transparent),
+    radial-gradient(1px 1px at 55% 62%, rgba(255, 255, 255, .8), transparent),
+    radial-gradient(1.4px 1.4px at 71% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 88% 58%, rgba(255, 255, 255, .85), transparent),
+    var(--gas),                                                                   /* grey gas texture */
+    radial-gradient(38% 75% at var(--x1) 30%, rgba(var(--neb-1), .9),  transparent 72%),  /* colour clouds */
+    radial-gradient(34% 70% at var(--x2) 70%, rgba(var(--neb-2), .72), transparent 72%),
+    radial-gradient(38% 70% at var(--x3) 20%, rgba(var(--neb-3), .85), transparent 72%),
+    radial-gradient(38% 70% at var(--x4) 80%, rgba(var(--neb-4), .8),  transparent 72%),
+    linear-gradient(var(--neb-base), var(--neb-base));
+  background-size:
+    100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%,
+    140% 160%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position:
+    0 0, 0 0, 0 0, 0 0, 0 0, 0 0,
+    0% 30%, 0 0, 0 0, 0 0, 0 0, 0 0;
+  background-repeat: no-repeat;
+  background-blend-mode:
+    normal, normal, normal, normal, normal, normal,
+    overlay, normal, normal, normal, normal, normal;
+  /* keep these two AFTER the background shorthand, or the text clip is reset */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 24px rgba(var(--neb-4), .3));
+}
+
+/* Movement – a bit livelier than before. Every cloud runs on its own clock. */
+@media (prefers-reduced-motion: no-preference) {
+  .name {
+    animation:
+      cloud1 17s ease-in-out infinite alternate,
+      cloud2 23s ease-in-out infinite alternate,
+      cloud3 19s ease-in-out infinite alternate,
+      cloud4 29s ease-in-out infinite alternate,
+      gas 30s ease-in-out infinite alternate;
+  }
+}
+@keyframes cloud1 { to { --x1: 85%; } }
+@keyframes cloud2 { to { --x2: 15%; } }
+@keyframes cloud3 { to { --x3: 80%; } }
+@keyframes cloud4 { to { --x4: 10%; } }
+@keyframes gas {
+  to {
+    background-position:
+      0 0, 0 0, 0 0, 0 0, 0 0, 0 0,
+      100% 70%, 0 0, 0 0, 0 0, 0 0, 0 0;
+  }
+}
+
+/* Sparkles: a few tiny four-point stars that twinkle softly around the name */
+.sparkle {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: var(--s);
+  background: #fff;
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  opacity: .5;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sparkle { animation: twinkle var(--t) ease-in-out var(--d) infinite; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: .1; transform: scale(.6); }
+  50%      { opacity: .9; transform: scale(1); }
+}
+
+
+/* 6. JOB TITLE + HOME BUTTONS ---------------------------- */
+/* Job title: quiet warm-white, normal capitalisation, sits just under the name */
+.role {
+  margin: 1rem 0 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 2.8vw, 1.55rem);
+  letter-spacing: .07em;
+  color: rgba(255, 238, 228, .82);                 /* soft white, a hint of the nebula's warm tone */
+  text-shadow: 0 0 22px rgba(var(--neb-1), .22);   /* very faint glow so it belongs with the name */
+}
+
+/* The two buttons: one filled, one outlined, same size */
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: calc(3.6rem + 45px);
+}
+
+.btn {
+  font: 500 .95rem var(--sans);
+  letter-spacing: .02em;
+  text-decoration: none;
+  padding: .85rem 2rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background-color .25s, border-color .25s, color .25s, transform .25s;
+}
+
+/* About me – softly filled (translucent), so it doesn't compete with the name */
+.btn.primary {
+  color: #fff1e8;
+  background: rgba(255, 230, 216, .14);
+  border: 1px solid rgba(255, 241, 232, .5);
+}
+.btn.primary:hover {
+  background: rgba(255, 230, 216, .24);
+  border-color: rgba(255, 241, 232, .85);
+  transform: translateY(-1px);
+}
+
+/* Projects – uses the shared outlined look from section 3 */
+
+
+/* 7. ABOUT ME – fan of portrait cards -------------------- */
+/* Home and About are two "views" of the same page: <body data-view="home|about"> is switched by about.js */
+
+/* While About is open the sky goes soft and still: stars blurred, comets resting */
+#stars { transition: filter .6s ease, opacity .6s ease; }
+body[data-view="about"] #stars { filter: blur(6px); opacity: .5; }
+body[data-view="about"] canvas:not(#stars) { opacity: 0; }
+
+/* The About view fills the whole screen, so the cards sit exactly in the centre of it */
+.about {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;                          /* only matters on very short screens */
+  padding: calc(4.5rem + env(safe-area-inset-top, 0px)) 1rem calc(4.5rem + env(safe-area-inset-bottom, 0px));   /* same space above and below = truly centred */
+}
+
+body[data-view="about"] main,
+body[data-view="about"] header { display: none; }       /* the About view covers the top bar too */
+body[data-view="about"] .about { display: flex; }
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-view="about"] .about { animation: aboutIn .6s ease-out both; }
+}
+@keyframes aboutIn { from { opacity: 0; } to { opacity: 1; } }
+
+.back {
+  position: absolute;                      /* inside the deck */
+  left: 0;
+  top: -3rem;                              /* small screens: just above the top-left corner of the cards */
+  z-index: 10;
+  width: max-content;                      /* stay one line, as wide as the text needs */
+  white-space: nowrap;
+  font-size: .85rem;
+  padding: .5rem 1.05rem;
+}
+@media (min-width: 760px) {
+  .back {                                  /* wide screens: to the left of the cards, level with their top edge, 20px away */
+    top: 0;
+    left: auto;
+    right: calc(100% + 20px);
+  }
+}
+
+/* The deck: portrait cards piled up. The ones behind lean to the right so their edge and title show. */
+.deck {
+  --fan: clamp(18px, 5vw, 28px);                                   /* how much of each card behind peeks out */
+  --w: min(420px, calc(100vw - var(--fan) * 3.9 - 2.4rem));
+  position: relative;
+  margin: auto;                                                    /* centres it both ways */
+  width: var(--w);
+  height: clamp(480px, calc(100vh - 9rem), 760px);
+  height: clamp(480px, calc(100svh - 9rem), 760px);
+  touch-action: pan-y;                     /* vertical scroll stays normal, horizontal swipes flip the cards */
+  outline: none;
+}
+
+.card {
+  /* corner sizes: top-left, top-right, bottom-right, bottom-left */
+  --tl: 26px; --tr: 26px; --br: 26px; --bl: 26px;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: #f1ece6;
+  border-radius: var(--tl) var(--tr) var(--br) var(--bl);
+  border: 1px solid rgba(255, 255, 255, .1);
+  background: linear-gradient(170deg, #2c2c31 0%, #232327 100%);   /* soft charcoal grey */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .5);
+  transform-origin: 50% 100%;
+  transition: transform .65s cubic-bezier(.22, .8, .3, 1), opacity .5s ease, filter .5s ease;
+}
+
+/* three gentle shapes */
+.shape-a { --tl: 110px; --tr: 110px; }   /* soft arch */
+.shape-b { --tl: 70px; }                 /* one rounder corner, top left */
+.shape-c { --tr: 70px; }                 /* one rounder corner, top right */
+
+/* where each card is: in front, waiting behind (title on its edge), or already flipped away */
+.card[data-pos="front"] { transform: none; opacity: 1; z-index: 5; }
+.card[data-pos="n1"]    { transform: translateX(var(--fan)) rotate(2.5deg);            filter: brightness(.8);  z-index: 4; cursor: pointer; }
+.card[data-pos="n2"]    { transform: translateX(calc(var(--fan) * 1.9)) rotate(5deg);  filter: brightness(.62); z-index: 3; cursor: pointer; }
+.card[data-pos="far"]   { transform: translateX(calc(var(--fan) * 1.9)) rotate(5deg);  opacity: 0; z-index: 2; pointer-events: none; }
+.card[data-pos="prev"]  { transform: translate(-80%, -3%) rotate(-9deg);               opacity: 0; z-index: 6; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: opacity .2s ease; }
+}
+
+/* a very faint drawing in the top corner (made by about.js) */
+.card-art {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 130px;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(#000 40%, transparent);
+  mask-image: linear-gradient(#000 40%, transparent);
+}
+.card-art svg { display: block; width: 100%; height: 100%; }
+
+/* the tiny stars breathe: they fade up and swell a little, each on its own slow timing */
+.card-art .star {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cardTwinkle 5s ease-in-out infinite;
+}
+@keyframes cardTwinkle {
+  0%, 100% { opacity: .35; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.8); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-art .star { animation: none; }
+}
+
+/* the title written on the edge of a card while it waits behind */
+.tab {
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  width: calc(var(--fan) - 4px);
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  text-align: center;
+  white-space: nowrap;
+  font-size: .66rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(241, 236, 230, .85);
+  opacity: 0;
+  transition: opacity .4s ease;
+  z-index: 3;
+  pointer-events: none;
+}
+.card[data-pos="n1"] .tab, .card[data-pos="n2"] .tab { opacity: 1; }
+.card[data-pos="n2"] .tab { width: calc(var(--fan) * .9 - 4px); }
+
+.card-body {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow-y: auto;
+  padding: 92px 30px 58px;                 /* room at the top for the title, at the bottom for the floating controls */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, .18) transparent;
+}
+.card.first .card-body { padding-top: 40px; }
+
+.card h2 {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 5vw, 2.1rem);
+  letter-spacing: .04em;
+  color: #f6f1ea;
+}
+
+.card p {
+  margin: 0 0 1.1rem;
+  font-size: .98rem;
+  line-height: 1.8;
+  color: rgba(241, 236, 230, .84);
+}
+.card .lead { text-align: center; font-size: 1.05rem; line-height: 1.9; }
+
+/* Card 1: photo, name, and a short intro */
+.who { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 1.6rem; }
+.who h2 { margin: .9rem 0 0; font-size: 1.8rem; }
+.who img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 22%;
+  border: 1px solid rgba(255, 255, 255, .3);
+}
+.card .role-s {
+  margin: .2rem 0 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: .06em;
+  color: rgba(255, 238, 228, .72);
+}
+.intro p { text-align: center; }
+
+/* Card 3: education */
+.edu { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.15rem; }
+.edu li { padding-bottom: 1.15rem; border-bottom: 1px solid rgba(255, 255, 255, .08); }
+.edu li:last-child { border-bottom: 0; padding-bottom: 0; }
+.edu strong { display: block; font-weight: 500; font-size: 1rem; color: #f6f1ea; }
+.edu .sub { display: block; margin-top: .2rem; font-size: .84rem; line-height: 1.55; color: var(--muted); }
+.edu .meta { display: block; margin-top: .3rem; font-size: .8rem; letter-spacing: .05em; color: rgba(255, 238, 228, .7); }
+
+/* Card 4: skills */
+.tags { display: flex; flex-wrap: wrap; justify-content: center; gap: .7rem; }
+.tag {
+  padding: .5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .25);
+  font-size: .9rem;
+  color: #f6f1ea;
+}
+
+/* smaller button for use inside the cards */
+.btn-sm { padding: .6rem 1.3rem; font-size: .88rem; }
+
+/* Card 5: certification */
+.card-body:has(.cert-name) { text-align: center; }
+.card .cert-name { margin: 0 0 .3rem; font-size: 1rem; color: #f6f1ea; }
+.card .cert-by { margin: 0 0 1.3rem; font-size: .88rem; color: var(--muted); }
+
+/* Card 6: projects – a plain numbered list (1. 2.) in the same text style as the other cards */
+.proj-list { margin: 0 0 2rem; padding-left: 1.4rem; display: grid; gap: 1rem; }
+.proj-list li { font-size: .98rem; line-height: 1.7; color: rgba(241, 236, 230, .84); }
+
+/* Floating controls: a small pill centred on the bottom edge of the front card */
+.controls {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .35rem .45rem;
+  border-radius: 999px;
+  background: rgba(30, 30, 34, .92);
+  border: 1px solid rgba(255, 255, 255, .14);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.controls .icon-btn { width: 2.3rem; height: 2.3rem; }
+.controls .icon-btn svg { width: 1.1rem; height: 1.1rem; }
+button.icon-btn { padding: 0; cursor: pointer; font: inherit; }
+button.icon-btn:disabled { opacity: .3; pointer-events: none; }
+.dots { display: flex; align-items: center; }
+.dot { position: relative; width: 20px; height: 20px; padding: 0; border: 0; background: none; cursor: pointer; }
+.dot::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 241, 232, .5);
+  transition: background-color .3s, transform .3s, border-color .3s;
+}
+.dot[aria-current="true"]::after { background: #fff1e8; border-color: #fff1e8; transform: scale(1.3); }
+
+/* "2 / 6 · Next: Education" under the pill */
+.count {
+  position: absolute;
+  top: calc(100% + 2.2rem);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: .76rem;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+
+
+/* 8. PROJECTS + CASE STUDY PAGES (projects.html, case-chatgpt.html, case-instagram.html) */
+/* These are normal scrolling pages: <body class="sub">. The home page stays a single fixed screen. */
+body.sub {
+  display: block;
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+body.sub { background: #262624; }                         /* soft dark grey for the reading pages */
+body.sub #stars { display: none; }                          /* no star field here */
+
+.sub-main { position: relative; z-index: 1; padding: .6rem clamp(1.1rem, 5vw, 3rem) calc(5rem + env(safe-area-inset-bottom, 0px)); }
+.wrap { width: min(100%, 1040px); margin: 0 auto; }
+.case[data-mode="full"] .wrap { width: min(100%, 760px); }   /* Quick read uses the wide layout, the full story a reading column */
+
+/* strip that stays in view while scrolling: back link on the left, reading mode on the right */
+.page-bar {
+  position: sticky;
+  top: calc(.6rem + env(safe-area-inset-top, 0px));   /* stays clear of a phone's notch */
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.page-bar .chip, .seg {
+  background: rgba(38, 38, 36, .92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.page-bar .chip { font-size: .85rem; padding: .5rem 1.05rem; white-space: nowrap; }
+.lbl-short { display: none; }
+
+.seg { display: flex; padding: .22rem; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .18); }
+.seg button {
+  font: 500 .8rem var(--sans);
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-radius: 999px;
+  padding: .45rem .9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color .25s, color .25s;
+}
+.seg button[aria-pressed="true"] { background: rgba(255, 241, 232, .14); color: #fff1e8; }
+.seg button:focus-visible { outline: 2px solid #cdbbff; outline-offset: 2px; }
+
+/* page title block */
+.case-head { padding: 3.2rem 0 1.6rem; }
+.kicker { margin: 0 0 .9rem; font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.sub h1 {
+  margin: 0 0 1rem;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.15;
+  letter-spacing: .02em;
+  color: #f6f1ea;
+}
+.lede { margin: 0; max-width: 46rem; font-size: 1.1rem; line-height: 1.8; color: rgba(241, 236, 230, .82); }
+
+/* the two reading modes */
+.case[data-mode="quick"] .full { display: none; }
+.case[data-mode="full"]  .quick-read { display: none; }
+
+/* ---- Quick read: wide, card-based ---- */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0 1rem; }
+.stat, .fact, .tile {
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: #2f2f2d;
+}
+.stat { padding: 1.4rem 1rem; text-align: center; }
+.stat b { display: block; font-family: var(--display); font-weight: 400; font-size: 2.6rem; line-height: 1.2; color: #fff1e8; }
+.stat span { display: block; margin-top: .3rem; font-size: .9rem; line-height: 1.4; color: var(--muted); }
+
+.facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.fact { padding: 1.5rem 1.6rem; }
+.fact.span { grid-column: 1 / -1; }
+.fact h3 { margin: 0 0 .7rem; font: 500 .74rem var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.fact p { margin: 0; font-size: 1.08rem; line-height: 1.75; color: rgba(241, 236, 230, .92); }
+.fact em { font-style: normal; color: #fff1e8; }
+.sug { margin: 0; padding-left: 1.2rem; display: grid; gap: .6rem; }
+.sug li { font-size: 1.08rem; line-height: 1.75; color: rgba(241, 236, 230, .92); }
+.cta { margin: 2rem 0 0; }
+.cta .btn { cursor: pointer; }
+
+/* ---- Full case study: Medium-style reading column ---- */
+.prose, .prose p, .prose li, .prose h2, .prose blockquote { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+.prose p, .prose li { font-size: 1.28rem; line-height: 2; color: rgba(241, 236, 230, .9); }
+.prose p { margin: 0 0 1.7rem; }
+.prose h2 {
+  margin: 3.6rem 0 1.2rem;
+  font-weight: 500;
+  font-size: 2.1rem;
+  line-height: 1.35;
+  text-align: left;
+  letter-spacing: -.005em;
+  color: #f6f1ea;
+}
+.prose ul { margin: 0 0 1.6rem; padding-left: 1.3rem; display: grid; gap: .9rem; }
+.prose blockquote {
+  margin: 2rem 0;
+  padding: .1rem 0 .1rem 1.3rem;
+  border-left: 2px solid rgba(255, 241, 232, .35);
+  font-style: italic;
+  font-size: 1.45rem;
+  line-height: 1.8;
+  color: #f6f1ea;
+}
+.prose a { color: #fff1e8; text-decoration-color: rgba(255, 241, 232, .4); text-underline-offset: 3px; }
+.prose a:hover { text-decoration-color: #fff1e8; }
+.prose .next { margin: 2.4rem 0 0; font-family: var(--sans); font-size: 1rem; }
+.prose .next + .next { margin-top: 1rem; }
+
+/* images: small, in the flow of the text. A single image is shown compact; several in a row become tiles. Click to enlarge. */
+.prose figure { margin: 0; }
+.prose a[data-lb] { display: block; cursor: zoom-in; }
+.prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  background: #1c1c20;
+}
+.single { max-width: 380px; margin: 2.2rem auto !important; }
+.single img { width: auto; max-width: 100%; max-height: 260px; margin: 0 auto; }
+.single figcaption, .gcap { margin-top: .7rem; font: .85rem/1.5 var(--sans); text-align: center; color: var(--muted); }
+
+.gallery { display: grid; gap: .6rem; margin: 2.2rem 0 0; }
+.gallery.g2 { grid-template-columns: repeat(2, 1fr); }
+.gallery.g3 { grid-template-columns: repeat(3, 1fr); }
+.gallery.g4 { grid-template-columns: repeat(2, 1fr); }
+.gallery figure { position: relative; }
+.gallery img { aspect-ratio: 4 / 3; height: auto; object-fit: cover; object-position: top left; }
+.gallery .fn {
+  position: absolute;
+  left: .5rem;
+  bottom: .5rem;
+  padding: .15rem .55rem;
+  border-radius: 999px;
+  font: 500 .7rem var(--sans);
+  color: #f6f1ea;
+  background: rgba(15, 15, 18, .8);
+  pointer-events: none;
+}
+.gcap { margin: .7rem 0 2.2rem; }
+
+/* if an image can't load, a quiet placeholder takes its place */
+.prose figure.missing a { display: none; }
+.prose figure.missing::before {
+  content: "Image placeholder \2014  " attr(data-fig);
+  display: block;
+  padding: 2rem 1rem;
+  text-align: center;
+  font: .85rem var(--sans);
+  color: var(--muted);
+  border: 1px dashed rgba(255, 255, 255, .2);
+  border-radius: 10px;
+}
+.prose figure.missing .fn { display: none; }
+
+/* image viewer (opened by projects.js) */
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  background: rgba(8, 8, 10, .93);
+}
+.lb.open { display: flex; }
+.lb img { max-width: min(100%, 1100px); max-height: 78vh; object-fit: contain; border-radius: 8px; }
+.lb p { margin: .9rem 0 0; max-width: 46rem; text-align: center; font: .92rem/1.6 var(--sans); color: rgba(241, 236, 230, .88); }
+.lb .icon-btn { position: absolute; padding: 0; cursor: pointer; background: rgba(22, 22, 26, .9); }
+.lb .x  { top: 1rem; right: 1rem; }
+.lb .pv { left: 1rem;  top: 50%; transform: translateY(-50%); }
+.lb .nx { right: 1rem; top: 50%; transform: translateY(-50%); }
+
+/* ---- Projects page: plain wide rows, one under the other ---- */
+.tiles { display: grid; gap: 1.2rem; margin-top: .4rem; }
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  padding: 2.2rem 2.4rem;
+  border-radius: 24px;
+}
+.tile .no { font-size: .78rem; letter-spacing: .14em; color: var(--muted); }
+.tile h2 { margin: .5rem 0 .7rem; font-family: var(--display); font-weight: 400; font-size: 1.8rem; line-height: 1.25; color: #f6f1ea; }
+.tile p { margin: 0; max-width: 40rem; font-size: 1.02rem; line-height: 1.75; color: rgba(241, 236, 230, .8); }
+.tile .btn { flex: none; }
+
+@media (max-width: 760px) {
+  .facts { grid-template-columns: 1fr; }
+  .stat b { font-size: 2.1rem; }
+  .tile { flex-direction: column; align-items: flex-start; gap: 1.6rem; padding: 1.7rem 1.5rem; }
+}
+@media (max-width: 560px) {
+  .page-bar { flex-wrap: wrap; }                    /* very narrow phones: the two controls may stack */
+  .lbl-long { display: none; }                      /* "All case studies" becomes "Back" so the strip fits on one line */
+  .lbl-short { display: inline; }
+  .case-head { padding-top: 2.4rem; }
+  .seg button { padding: .42rem .7rem; font-size: .76rem; }
+  .prose p, .prose li { font-size: 1.15rem; line-height: 1.95; }
+  .prose h2 { font-size: 1.75rem; margin-top: 3rem; }
+  .prose blockquote { font-size: 1.25rem; }
+}
+
+
+/* 9. OPENING ANIMATION (home page) ----------------------- */
+/* index.html sets <html data-intro="wait"> before the page paints; intro.js then moves it on:
+   wait -> name -> rest -> (attribute removed). Nothing here applies once the attribute is gone. */
+#warp {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 60;
+  background: #000;
+  cursor: pointer;
+  transition: opacity 1.2s ease;          /* melts away slowly, while the name and the sky come up underneath */
+}
+#warp.out { opacity: 0; pointer-events: none; }
+
+/* stage "name": the sky and the glow behind the name arrive, and the name comes up out of the nebula */
+html[data-intro] #stars { transition: opacity 1.6s ease; }
+html[data-intro="wait"] #stars { opacity: 0; }
+html[data-intro] main::before { transition: opacity 1.8s ease; }
+html[data-intro="wait"] main::before { opacity: 0; }
+
+html[data-intro] .hero { transition: opacity 1.5s ease, filter 1.6s ease, transform 1.6s ease; }
+html[data-intro="wait"] .hero { opacity: 0; filter: blur(14px) brightness(1.7); transform: scale(.96); }
+
+/* stage "rest": top bar first, then the job title, then each button one after the other */
+html[data-intro] header { transition: opacity .7s ease; }
+html[data-intro="wait"] header,
+html[data-intro="name"] header { opacity: 0; }
+
+html[data-intro] .role,
+html[data-intro] .actions .btn { transition: opacity .6s ease, transform .6s ease; }
+html[data-intro="rest"] .role { transition-delay: .2s; }
+html[data-intro="rest"] .actions .btn:nth-child(1) { transition-delay: .5s; }
+html[data-intro="rest"] .actions .btn:nth-child(2) { transition-delay: .85s; }
+
+html[data-intro="wait"] .role, html[data-intro="name"] .role,
+html[data-intro="wait"] .actions .btn, html[data-intro="name"] .actions .btn { opacity: 0; transform: translateY(10px); }
+
+html[data-intro="wait"] .sparkle, html[data-intro="name"] .sparkle { visibility: hidden; }
+
+
+/* Small screens */
+@media (max-width: 480px) {
+  .logo-a { font-size: .9rem; }
+  .logo-f { font-size: 1.25rem; }
+  .chip { padding: .55rem .95rem; font-size: .84rem; }
+  .icon-btn { width: 2.45rem; height: 2.45rem; }
+  .quick { gap: .4rem; }
+  .role { margin-top: .8rem; }
+  .actions { gap: .7rem; margin-top: calc(2.8rem + 45px); }
+  .btn { padding: .75rem 1.5rem; font-size: .9rem; }
+}
